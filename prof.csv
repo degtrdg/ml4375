@@ -1,0 +1,15 @@
+Personality,Difficulty,RMP Reviews,Easy A,Worth Taking
+Hilarious,Low,Awesome,No,-
+Boring,Medium,Awful,No,+
+Boring,Low,Awesome,No,+
+Hilarious,Low,Awesome,Yes,-
+Hilarious,Low,Average,Yes,-
+Hilarious,Medium,Awful,No,+
+Hilarious,High,Awful,No,-
+Hilarious,Medium,Awesome,No,+
+Hilarious,Medium,Average,Yes,-
+Hilarious,High,Awful,Yes,-
+Boring,Medium,Awesome,Yes,-
+Boring,Low,Average,Yes,+
+Boring,High,Awesome,No,-
+Boring,High,Average,Yes,-

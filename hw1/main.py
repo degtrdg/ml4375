@@ -7,6 +7,7 @@ from math import log
 
 
 def main():
+    # DEFINE FUNCTIONS
     def list_to_dist(l):
         counts = [l.count(item) for item in set(l)]
         total = sum(counts)
@@ -95,16 +96,31 @@ def main():
         rows = [list_to_dict(l, list(data.columns)) for l in data.drop(target, axis=1).values.tolist()]
         return [traverse(tree, row) for row in rows]
 
+
+    # BEGIN SCRIPT
     data = pd.read_csv("hw1/train/train4.dat", sep="\t")
+    test_data = pd.read_csv("hw1/test/test4.dat", sep="\t")
     target = 'class'
     attribute_values = {
         column:set(data[column]) for column in data.columns
     }
     target_counts = {x:list(data[target]).count(x) for x in [0,1,2]}
 
+    # Build and print tree
     tree = Node(data)
     build_tree(tree)
     print_tree(tree, 0)
+    print()
+
+    # Training accuracy
+    data['Predicted'] = predict(tree, data)
+    training_accuracy = round(100*sum(data[target] == data['Predicted'])/len(data), 1)
+    print("Accuracy on training set (" + str(len(data)) + " instances): " + str(training_accuracy) + "%")
+
+    # Test accuracy
+    test_data['Predicted'] = predict(tree, test_data)
+    test_accuracy = round(100*sum(test_data[target] == test_data['Predicted'])/len(test_data), 1)
+    print("Accuracy on test set (" + str(len(test_data)) + " instances): " + str(test_accuracy) + "%")
 
 
 

@@ -1,8 +1,8 @@
 import sys
 import pandas as pd
 import numpy as np
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
 from math import log
 
 
@@ -127,28 +127,28 @@ def main(train_file, test_file):
     test_accuracy = accuracy(tree, test_data)
     print("Accuracy on test set (" + str(len(test_data)) + " instances): " + str(test_accuracy) + "%" + "\n")
 
-    # # Plot learning curve
-    # learning_curve_trees = {n:Node(data.sample(n)) for n in range(100,801,100)}
-    # for tree in learning_curve_trees.values():
-    #     build_tree(tree)
-    # learning_curve_dict ={n:accuracy(learning_curve_trees[n], test_data) for n in range(100,801,100)}
-    # learning_curve_plot = pd.DataFrame(
-    #     learning_curve_dict.items(), columns=['Training Set Size', 'Test Accuracy']
-    # )
+    # Plot learning curve
+    learning_curve_trees = {n:Node(data.sample(n)) for n in range(100,801,100)}
+    for tree in learning_curve_trees.values():
+        build_tree(tree)
+    learning_curve_dict ={n:accuracy(learning_curve_trees[n], test_data) for n in range(100,801,100)}
+    learning_curve_plot = pd.DataFrame(
+        learning_curve_dict.items(), columns=['Training Set Size', 'Test Accuracy']
+    )
 
-    # plt.figure(figsize=(10, 6))
-    # sns.scatterplot(data=learning_curve_plot, x='Training Set Size', y='Test Accuracy')
-    # plt.title('Learning Curve')
-    # plt.xlabel('Training Set Size')
-    # plt.ylabel('Test Accuracy (%)')
-    # plt.grid(True)
-    # plt.show()
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=learning_curve_plot, x='Training Set Size', y='Test Accuracy')
+    plt.title('Learning Curve')
+    plt.xlabel('Training Set Size')
+    plt.ylabel('Test Accuracy (%)')
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
     train_file = sys.argv[1]
     test_file = sys.argv[2]
     # train_file = 'hw1/train/train3.dat' 
     # test_file = 'hw1/test/test3.dat'
-    # train_file = 'hw1/train/train2.dat' 
-    # test_file = 'hw1/test/test2.dat'
+    train_file = 'hw1/train/train.dat' 
+    test_file = 'hw1/test/test.dat'
     main(train_file, test_file)

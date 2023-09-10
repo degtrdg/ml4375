@@ -42,8 +42,6 @@ def main(train_file, test_file):
     test = pd.read_csv(test_file, sep='\t')
     ascii_tree(train)
 
-    
-
 if __name__ == "__main__":
     # train_file = sys.argv[1]
     # test_file = sys.argv[2]

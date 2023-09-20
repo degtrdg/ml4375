@@ -11,8 +11,7 @@ def predict_instance(row, class_priors, conditionals_df):
     for class_label in class_priors.index:
         log_prob = np.log(class_priors[class_label])
         for attr in attribute_names:
-            value = np.log(conditionals_df.loc[(class_label, attr), row[class_label]])
-
+            value = np.log(conditionals_df.loc[(class_label, attr), row[attr]])
             log_prob += value
         if log_prob > best_log_prob:
             best_class = class_label
@@ -55,6 +54,7 @@ def main(train_file, test_file):
                 print(f"P({attribute}={value}|{class_label})={conditional_prob:.2f}", end=' ')
         print()
     
+    predict_instance(data.iloc[0], class_priors, conditionals_df)
     data['Predicted'] = data.apply(lambda row: predict_instance(row, class_priors, conditionals_df), axis=1)
 
     accuracy_train = sum(data['Predicted'] == data[target])/len(data)

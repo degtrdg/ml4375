@@ -5,8 +5,6 @@ import numpy as np
 # import matplotlib.pyplot as plt
 from math import log
 
-
-
 def main(train_file, test_file):
     # DEFINE FUNCTIONS
     def list_to_dist(l):

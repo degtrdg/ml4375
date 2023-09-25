@@ -15,4 +15,11 @@ def s4(states):
 def next_states(states):
     return [s1(states), s2(states), s3(states), s4(states)]
 
-print(next_states(next_states(init_states)))
+def iterate_states(states, epsilon, count):
+    print(str(count) + ": ", end="")
+    print(states)
+    next = next_states(states)
+    if not all([abs(z[0] - z[1]) < epsilon for z in zip(next, states)]):
+        iterate_states(next, epsilon, count+1)
+
+iterate_states(init_states, 0.0001, 0)

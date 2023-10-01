@@ -74,15 +74,27 @@ class PoleBalancing:
 
 def main():
     # set different configurations here
-    lr = 0.2                # learning rate
-    gamma = 0.99            # discount factor
+    # lr = 0.5, gamma = 0.999, track_length_on_each_side = 2.4, policy = 'greedy', DEBUG=False
+    # lr = 0.2                # learning rate
+    # gamma = 0.99            # discount factor
+    # track_length = 2.4      # how far the ends of the track are from the origin.
+    #                         # e.g., while track_length is 2.4,
+    #                         # the x-coordinate of the left end of the track is -2.4,
+    #                         # the x-coordinate of the right end of the track is 2.4,
+    #                         # and the x-coordinate of the the cart is 0 initially.
+    # epsilon = 0.005         # epsilon for the mixed policy
+    # policy = 'mixed'        # policy can be 'mixed' or 'greedy'
+
+    # lr = 0.5, gamma = 0.999, track_length_on_each_side = 2.4, policy = 'greedy', DEBUG=False
+    lr = 0.5                # learning rate
+    gamma = 0.999           # discount factor
     track_length = 2.4      # how far the ends of the track are from the origin.
                             # e.g., while track_length is 2.4,
                             # the x-coordinate of the left end of the track is -2.4,
                             # the x-coordinate of the right end of the track is 2.4,
                             # and the x-coordinate of the the cart is 0 initially.
     epsilon = 0.005         # epsilon for the mixed policy
-    policy = 'mixed'        # policy can be 'mixed' or 'greedy'
+    policy = 'greedy'       # policy can be 'mixed' or 'greedy'
 
     # init
     problem = PoleBalancing()

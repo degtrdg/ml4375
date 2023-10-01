@@ -23,7 +23,7 @@ BACKWARD_ACCEL = 0
 NO_ACCEL = -1
 
 # switches
-DEBUG = True
+DEBUG = False
 
 
 class PoleBalancing:

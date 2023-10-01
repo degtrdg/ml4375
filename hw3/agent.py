@@ -9,8 +9,8 @@ BACKWARD_ACCEL = 0
 
 
 class QLearningAgent:
-    def __init__(self, lr, gamma, track_length, epsilon=0, policy='greedy', x_bins=100, x_dot_bins=100, theta_bins=100, theta_dot_bins=100,
-                 min_x_dot=-10, max_x_dot=10, min_theta_dot=-10, max_theta_dot=10):
+    def __init__(self, lr, gamma, track_length, epsilon=0, policy='greedy', x_bins=10, x_dot_bins=10, theta_bins=10, theta_dot_bins=10,
+                 min_x_dot=-1.5, max_x_dot=1.5, min_theta_dot=-1.5, max_theta_dot=1.5):
         """
         A function for initializing your agent
         :param lr: learning rate

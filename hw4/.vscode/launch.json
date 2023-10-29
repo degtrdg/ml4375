@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: main.py with Args",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": [
+        "${workspaceFolder}/train/train4.dat",
+        "${workspaceFolder}/test/test4.dat",
+        "2",
+        "4",
+        "0.01",
+        "100"
+      ]
+    },
+    {
+      "name": "Python: main.py with train7.dat",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": [
+        "${workspaceFolder}/train/train7.dat",
+        "${workspaceFolder}/test/test7.dat",
+        "3",
+        "5",
+        "0.001",
+        "200"
+      ]
+    }
+  ]
+}

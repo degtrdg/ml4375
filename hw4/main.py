@@ -1,5 +1,7 @@
 # python main.py train/train7.dat test/test7.dat 0 1 0.9 1000
 # python main.py train/train7.dat test/test7.dat 1 2 0.9 1000
+# python main.py train/train7.dat test/test7.dat 2 2 0.9 1000
+
 import sys
 import pandas as pd
 import numpy as np
@@ -100,12 +102,12 @@ if __name__ == '__main__':
             output = output_layer.forward(input_data)
     
             # Backward propagation
-            output_layer.backprop_output(actual)
+            output_layer.calc_deltas_output(actual)
+            output_layer.backprop()
     
-            print(f"  Iteration: {i+1}")
-            print(f"  Input: {input_data}")
-            print(f"  Output: {output[0]:.4f}")
-            print(f"  Weights: {[node.weights for node in output_layer.nodes]}")
+            print(f"At iteration {i+1}:")
+            print(f"Forward pass output: {output[0]:.4f}")
+            print()
 
     else:
         # Initialize layers
@@ -128,26 +130,26 @@ if __name__ == '__main__':
             #     hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
             # output = output_layer.forward(hidden_layer_outputs)
             hidden_layer_outputs = input_layer.forward(input_data)
+            for hidden_layer in hidden_layers:
+                 hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
             output = output_layer.forward(hidden_layer_outputs)
 
             # Backward propagation
             output_layer.calc_deltas_output(actual)
-            input_layer.calc_deltas_hidden(output_layer)
-            output_layer.backprop()
-
-            # prev_layer = output_layer
-            # for hidden_layer in reversed(hidden_layers):
-            #     hidden_layer.backprop_hidden(prev_layer)
-            #     prev_layer = hidden_layer
             prev_layer = output_layer
+            for hidden_layer in reversed(hidden_layers):
+                hidden_layer.calc_deltas_hidden(prev_layer)
+                prev_layer = hidden_layer
+            input_layer.calc_deltas_hidden(output_layer)
+            
+            output_layer.backprop()
+            for hidden_layer in reversed(hidden_layers):
+                hidden_layer.backprop()
             input_layer.backprop()
 
-            print(f"  Iteration: {i+1}")
-            print(f"  Input: {input_data}")
-            print(f"  Output: {output[0]:.4f}")
-            print(f"  Weights: {[node.weights for node in output_layer.nodes]}")
+            print(f"At iteration {i+1}:")
+            print(f"Forward pass output: {output[0]:.4f}")
+            print()
 
         # Print forward and backward propagation
-        print(input)
-        print(hidden_layer_outputs)
-        print(output)
+        print(len(hidden_layers))

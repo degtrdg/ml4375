@@ -152,7 +152,7 @@ if __name__ == '__main__':
             for hidden_layer in reversed(hidden_layers):
                 hidden_layer.calc_deltas_hidden(prev_layer)
                 prev_layer = hidden_layer
-            input_layer.calc_deltas_hidden(output_layer)
+            input_layer.calc_deltas_hidden(prev_layer)
             
             output_layer.backprop()
             for hidden_layer in reversed(hidden_layers):

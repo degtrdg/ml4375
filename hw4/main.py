@@ -29,15 +29,16 @@ class Node:
         self.value = sigmoid(np.dot(self.inputs, self.weights))
         return self.value
 
-    def backprop_output(self, actual):
-        self.delta = self.value*(1 - self.value)*(actual - self.value)
+    def backprop(self):
         self.weights += learning_rate * self.delta * self.inputs
         
-    def backprop_hidden(self, forward_layer):
+    def calc_delta_output(self, actual):
+        self.delta = self.value*(1 - self.value)*(actual - self.value)
+
+    def calc_delta_hidden(self, forward_layer):
         forward_weights = forward_layer.get_forward_weights(self.node_num)
         forward_deltas = forward_layer.get_forward_deltas()
         self.delta = self.value*(1 - self.value)*np.dot(forward_weights, forward_deltas)
-        self.weights += learning_rate * self.delta * self.inputs
 
 class Layer:
     def __init__(self, num_inputs, num_hidden_nodes) -> None:
@@ -56,15 +57,18 @@ class Layer:
     def get_forward_deltas(self):
         return [node.delta for node in self.nodes]
     
-    def backprop_output(self, actual):
+    def calc_deltas_output(self, actual):
         for node in self.nodes:
-            node.backprop_output(actual)
+            node.calc_delta_output(actual)
     
-    def backprop_hidden(self, forward_layer):
+    def calc_deltas_hidden(self, forward_layer):
         for node in self.nodes:
-            node.backprop_hidden(forward_layer)
-
-
+            node.calc_delta_hidden(forward_layer)
+    
+    def backprop(self):
+        for node in self.nodes:
+            node.backprop()
+    
 if __name__ == '__main__':
     train_file = sys.argv[1]
     test_file = sys.argv[2]
@@ -123,19 +127,20 @@ if __name__ == '__main__':
             # for hidden_layer in hidden_layers:
             #     hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
             # output = output_layer.forward(hidden_layer_outputs)
-
             hidden_layer_outputs = input_layer.forward(input_data)
             output = output_layer.forward(hidden_layer_outputs)
 
             # Backward propagation
-            output_layer.backprop_output(actual)
+            output_layer.calc_deltas_output(actual)
+            input_layer.calc_deltas_hidden(output_layer)
+            output_layer.backprop()
 
             # prev_layer = output_layer
             # for hidden_layer in reversed(hidden_layers):
             #     hidden_layer.backprop_hidden(prev_layer)
             #     prev_layer = hidden_layer
             prev_layer = output_layer
-            input_layer.backprop_hidden(prev_layer)
+            input_layer.backprop()
 
             print(f"  Iteration: {i+1}")
             print(f"  Input: {input_data}")

@@ -123,8 +123,8 @@ if __name__ == '__main__':
     
             print(f"At iteration {i+1}:")
             print(f"Forward pass output: {output:.4f}")
-            print(f"Average squared error on training set (4 instances): {train_error:.4f}")
-            print(f"Average squared error on test set (4 instances): {test_error:.4f}")
+            print(f"Average squared error on training set ({len(train_data)} instances): {train_error:.4f}")
+            print(f"Average squared error on test set ({len(test_data)} instances): {test_error:.4f}")
             print()
 
     else:
@@ -165,8 +165,8 @@ if __name__ == '__main__':
 
             print(f"At iteration {i+1}:")
             print(f"Forward pass output: {output:.4f}")
-            print(f"Average squared error on training set (4 instances): {train_error:.4f}")
-            print(f"Average squared error on test set (4 instances): {test_error:.4f}")
+            print(f"Average squared error on training set ({len(train_data)} instances): {train_error:.4f}")
+            print(f"Average squared error on test set ({len(test_data)} instances): {test_error:.4f}")
             print()
 
         # Print forward and backward propagation

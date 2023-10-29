@@ -1,3 +1,5 @@
+# python main.py train/train7.dat test/test7.dat 0 1 0.9 1000
+# python main.py train/train7.dat test/test7.dat 1 2 0.9 1000
 import sys
 import pandas as pd
 import numpy as np
@@ -32,7 +34,9 @@ class Node:
         self.weights += learning_rate * self.delta * self.inputs
         
     def backprop_hidden(self, forward_layer):
-        self.delta = self.value*(1 - self.value)*np.dot(forward_layer.get_forward_weights(self.node_num), forward_layer.get_forward_deltas())
+        forward_weights = forward_layer.get_forward_weights(self.node_num)
+        forward_deltas = forward_layer.get_forward_deltas()
+        self.delta = self.value*(1 - self.value)*np.dot(forward_weights, forward_deltas)
         self.weights += learning_rate * self.delta * self.inputs
 
 class Layer:
@@ -80,51 +84,63 @@ if __name__ == '__main__':
         # Initialize layers
         output_layer = Layer(num_inputs, 1)
         # # Forward propagation
-        # input = train_data.iloc[0, :-1].to_numpy()
-        # output = output_layer.forward(input)
-
-        # # Backward propagation
-        # output_layer.backprop_output(train_data.iloc[0, -1])
-
-        # print(input)
-        # print(output)
-        for index, row in train_data.iterrows():
+        num_rows = train_data.shape[0]
+        for i in range(num_iterations):
+            index = i % num_rows  # Wrap around using modulo
+            row = train_data.iloc[index]  # Use iloc to get the row by integer-based index
+    
             input_data = row[:-1].to_numpy()
             actual = row[-1]
-
+    
             # Forward propagation
             output = output_layer.forward(input_data)
-
+    
             # Backward propagation
             output_layer.backprop_output(actual)
-
-            print(f"Input: {input_data}")
-            print(f"Output: {output}")
-            print(f"Weights: {[node.weights for node in output_layer.nodes]}")
+    
+            print(f"  Iteration: {i+1}")
+            print(f"  Input: {input_data}")
+            print(f"  Output: {output[0]:.4f}")
+            print(f"  Weights: {[node.weights for node in output_layer.nodes]}")
 
     else:
         # Initialize layers
         input_layer = Layer(num_inputs, num_hidden_nodes)
         hidden_layers = [Layer(num_hidden_nodes, num_hidden_nodes) for _ in range(num_hidden_layers - 1)]
+        # hidden_layers = [Layer(num_hidden_nodes, num_hidden_nodes) for _ in range(num_hidden_layers + 1)]
+        # hidden_layers = [Layer(num_hidden_nodes, num_hidden_nodes) for _ in range(num_hidden_layers)]
         output_layer = Layer(num_hidden_nodes, 1)
 
-        input = train_data.iloc[0, :-1].to_numpy()
+        num_rows = train_data.shape[0]
+        for i in range(num_iterations):
+        # for i in range(8):
+            index = i % num_rows  # Wrap around using modulo
+            row = train_data.iloc[index]  # Use iloc to get the row by integer-based index
+            input_data = row[:-1].to_numpy()
+            actual = row[-1]
+            # Forward propagation
+            # hidden_layer_outputs = input_layer.forward(input_data)
+            # for hidden_layer in hidden_layers:
+            #     hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
+            # output = output_layer.forward(hidden_layer_outputs)
 
-        # Forward propagation
-        hidden_layer_outputs = input_layer.forward(input)
-        for hidden_layer in hidden_layers:
-            hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
-        output = output_layer.forward(hidden_layer_outputs)
+            hidden_layer_outputs = input_layer.forward(input_data)
+            output = output_layer.forward(hidden_layer_outputs)
 
-        # Backward propagation
-        output_layer.backprop_output(train_data.iloc[0, -1])
+            # Backward propagation
+            output_layer.backprop_output(actual)
 
-        prev_layer = output_layer
-        for hidden_layer in reversed(hidden_layers):
-            hidden_layer.backprop_hidden(prev_layer)
-            prev_layer = hidden_layer
+            # prev_layer = output_layer
+            # for hidden_layer in reversed(hidden_layers):
+            #     hidden_layer.backprop_hidden(prev_layer)
+            #     prev_layer = hidden_layer
+            prev_layer = output_layer
+            input_layer.backprop_hidden(prev_layer)
 
-        input_layer.backprop_hidden(hidden_layers[0])
+            print(f"  Iteration: {i+1}")
+            print(f"  Input: {input_data}")
+            print(f"  Output: {output[0]:.4f}")
+            print(f"  Weights: {[node.weights for node in output_layer.nodes]}")
 
         # Print forward and backward propagation
         print(input)

@@ -7,12 +7,12 @@
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
       "args": [
-        "${workspaceFolder}/train/train4.dat",
-        "${workspaceFolder}/test/test4.dat",
+        "${workspaceFolder}/train/train7.dat",
+        "${workspaceFolder}/test/test7.dat",
+        "1",
         "2",
-        "4",
-        "0.01",
-        "100"
+        "0.9",
+        "1000"
       ]
     },
     {

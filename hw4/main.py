@@ -159,8 +159,14 @@ if __name__ == '__main__':
                 hidden_layer.backprop()
             input_layer.backprop()
 
+            # Errors
+            train_error = error(input_layer, hidden_layers, output_layer, train_data)
+            test_error = error(input_layer, hidden_layers, output_layer, test_data)
+
             print(f"At iteration {i+1}:")
             print(f"Forward pass output: {output:.4f}")
+            print(f"Average squared error on training set (4 instances): {train_error:.4f}")
+            print(f"Average squared error on test set (4 instances): {test_error:.4f}")
             print()
 
         # Print forward and backward propagation

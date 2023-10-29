@@ -16,6 +16,18 @@ def sigmoid_derivative(x):
 def read_data(file_path):
     return pd.read_csv(file_path, sep='\t')
 
+def nn_output(input_layer, hidden_layers, output_layer, input_data):
+    if input_layer is None:
+        return output_layer.forward(input_data)[0]
+    else:
+        hidden_layer_outputs = input_layer.forward(input_data)
+        for hidden_layer in hidden_layers:
+            hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
+        return (output_layer.forward(hidden_layer_outputs))[0]
+    
+def error(input_layer, hidden_layers, output_layer, data):
+    return np.mean([(row[-1] - nn_output(input_layer, hidden_layers, output_layer, row[:-1].to_numpy()))**2 for _, row in data.iterrows()])
+
 class Node:
     def __init__(self, num_inputs, node_num) -> None:
         self.value = None
@@ -99,14 +111,20 @@ if __name__ == '__main__':
             actual = row[-1]
     
             # Forward propagation
-            output = output_layer.forward(input_data)
+            output = nn_output(None, None, output_layer, input_data)
     
             # Backward propagation
             output_layer.calc_deltas_output(actual)
             output_layer.backprop()
+
+            # Errors
+            train_error = error(None, None, output_layer, train_data)
+            test_error = error(None, None, output_layer, test_data)
     
             print(f"At iteration {i+1}:")
-            print(f"Forward pass output: {output[0]:.4f}")
+            print(f"Forward pass output: {output:.4f}")
+            print(f"Average squared error on training set (4 instances): {train_error:.4f}")
+            print(f"Average squared error on test set (4 instances): {test_error:.4f}")
             print()
 
     else:
@@ -124,15 +142,9 @@ if __name__ == '__main__':
             row = train_data.iloc[index]  # Use iloc to get the row by integer-based index
             input_data = row[:-1].to_numpy()
             actual = row[-1]
+
             # Forward propagation
-            # hidden_layer_outputs = input_layer.forward(input_data)
-            # for hidden_layer in hidden_layers:
-            #     hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
-            # output = output_layer.forward(hidden_layer_outputs)
-            hidden_layer_outputs = input_layer.forward(input_data)
-            for hidden_layer in hidden_layers:
-                 hidden_layer_outputs = hidden_layer.forward(hidden_layer_outputs)
-            output = output_layer.forward(hidden_layer_outputs)
+            output = nn_output(input_layer, hidden_layers, output_layer, input_data)
 
             # Backward propagation
             output_layer.calc_deltas_output(actual)
@@ -148,7 +160,7 @@ if __name__ == '__main__':
             input_layer.backprop()
 
             print(f"At iteration {i+1}:")
-            print(f"Forward pass output: {output[0]:.4f}")
+            print(f"Forward pass output: {output:.4f}")
             print()
 
         # Print forward and backward propagation

@@ -1,6 +1,3 @@
-# python main.py train/train7.dat test/test7.dat 0 1 0.9 1000
-# python main.py train/train7.dat test/test7.dat 1 2 0.9 1000
-# python main.py train/train7.dat test/test7.dat 2 2 0.9 1000
 
 import sys
 import pandas as pd
@@ -9,9 +6,6 @@ import numpy as np
 # Sigmoid activation and its derivative
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
-
-def sigmoid_derivative(x):
-    return x * (1 - x)
 
 def read_data(file_path):
     return pd.read_csv(file_path, sep='\t')
@@ -26,10 +20,10 @@ def nn_output(input_layer, hidden_layers, output_layer, input_data):
         return (output_layer.forward(hidden_layer_outputs))[0]
     
 def error(input_layer, hidden_layers, output_layer, data):
-    return np.mean([(row[-1] - nn_output(input_layer, hidden_layers, output_layer, row[:-1].to_numpy()))**2 for _, row in data.iterrows()])
+    return np.mean([(row.to_numpy()[-1] - nn_output(input_layer, hidden_layers, output_layer, row.to_numpy()[:-1]))**2 for _, row in data.iterrows()])
 
 class Node:
-    def __init__(self, num_inputs, node_num) -> None:
+    def __init__(self, num_inputs, node_num):
         self.value = None
         self.weights = np.zeros(num_inputs + 1)
         self.inputs = None
@@ -61,7 +55,7 @@ class Layer:
         self.nodes = [Node(num_inputs, node_num) for node_num in range(num_hidden_nodes)]
         self.output = None
 
-    def forward(self, input: list[int]):
+    def forward(self, input):
         self.output = [node.calc_value(input) for node in self.nodes]
         return self.output
 
@@ -83,7 +77,7 @@ class Layer:
         for node in self.nodes:
             node.backprop()
     
-if __name__ == '__main__':
+if __name__ == "__main__":
     train_file = sys.argv[1]
     test_file = sys.argv[2]
     num_hidden_layers = int(sys.argv[3])
@@ -105,9 +99,9 @@ if __name__ == '__main__':
         num_rows = train_data.shape[0]
         for i in range(num_iterations):
             index = i % num_rows  # Wrap around using modulo
-            row = train_data.iloc[index]  # Use iloc to get the row by integer-based index
+            row = train_data.iloc[index].to_numpy()  # Use iloc to get the row by integer-based index
     
-            input_data = row[:-1].to_numpy()
+            input_data = row[:-1]
             actual = row[-1]
     
             # Forward propagation
@@ -137,7 +131,6 @@ if __name__ == '__main__':
 
         num_rows = train_data.shape[0]
         for i in range(num_iterations):
-        # for i in range(8):
             index = i % num_rows  # Wrap around using modulo
             row = train_data.iloc[index]  # Use iloc to get the row by integer-based index
             input_data = row[:-1].to_numpy()
@@ -169,5 +162,4 @@ if __name__ == '__main__':
             print(f"Average squared error on test set ({len(test_data)} instances): {test_error:.4f}")
             print()
 
-        # Print forward and backward propagation
-        print(len(hidden_layers))
+    print()

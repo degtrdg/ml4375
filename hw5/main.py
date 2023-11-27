@@ -52,13 +52,6 @@ def one_hot(index, length):
   result[index] = 1
   return result
 
-
-
-
-
-
-
-
 def main(train_file, num_clusters, num_iterations):
     num_clusters = int(num_clusters)
     num_iterations = int(num_iterations)
@@ -85,6 +78,3 @@ if __name__ == "__main__":
     num_clusters = sys.argv[2]
     num_iterations = sys.argv[3]
     main(train_file, num_clusters, num_iterations)
-
-    
-    

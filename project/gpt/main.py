@@ -31,6 +31,6 @@ for i in tqdm(range(len(data))):
     data.at[i, 'result_text'] = result['text']
     data.at[i, 'predicted_answer'] = result['answer']
     # Save both data and error dataframe to csv files every 100 entries to prevent data loss
-    if i % 100 == 0:
+    if i % 10 == 0:
         data.to_csv(f"{checkpoint_dir}/data{i}.csv")
         error_df.to_csv(f"{checkpoint_dir}/error{i}.csv")

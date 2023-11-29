@@ -1,6 +1,6 @@
 binary_classification_sys_prompt="""You are a discerning rationalist."""
 # binary_classification_sys_prompt="""You are a helpful assistant."""
-
+ 
 binary_classification_prompt="""You are given a first-hand account of information from a meme. You are given different pieces of information to figure out whether the meme is hateful (H) or not (N) after reasoning why you chose what you did.
 
 An example output would be like the following. Following this format is VERY important:

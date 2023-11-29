@@ -2,7 +2,9 @@ import pandas as pd
 from tqdm import tqdm
 import os
 
+from load_api_key import *
 from module.agent import get_meme_binary_classification
+
 
 data = pd.read_csv("data/train.csv") 
 data = data.reset_index()

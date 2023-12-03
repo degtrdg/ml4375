@@ -5,7 +5,6 @@ import os
 from module.agent import get_meme_binary_classification
 
 data = pd.read_csv("data/test_prelim.csv") 
-# data = pd.read_csv("data/train.csv") 
 data = data.reset_index()
 error_df = pd.DataFrame(columns=data.columns)
 checkpoint_dir = "checkpoints"
@@ -21,14 +20,10 @@ for i in tqdm(range(len(data))):
         "Text": entry['text'],
         "Image Caption": entry['image_caption'],
         "Surface Message": entry['surface_message'],
-        # "Background Knowledge": entry['background_knowledge'],
-        "Interpretation A": entry['A'],
-        "Interpretation B": entry['B'],
-        "Interpretation C": entry['C'],
-        "Interpretation D": entry['D'],
+        # "Background Knowledge": entry['background_knowledge']
     }
     correct_answer = entry['expert_label']
-    result = get_meme_binary_classification(clean_data, background=entry['background_knowledge'], model='gpt-4-1106-preview')
+    result = get_meme_binary_classification(clean_data, background=entry['background_knowledge'])
     # result = get_meme_binary_classification(clean_data)
     # If result is None, then an error occurred
     # Remove the entry from the data and add it to the error dataframe
@@ -44,5 +39,3 @@ for i in tqdm(range(len(data))):
     if i % 10 == 0:
         data.to_csv(f"{checkpoint_dir}/data{i}.csv")
         error_df.to_csv(f"{checkpoint_dir}/error{i}.csv")
-data.to_csv(f"{checkpoint_dir}/data{i}.csv")
-error_df.to_csv(f"{checkpoint_dir}/error{i}.csv")

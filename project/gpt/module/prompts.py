@@ -11,20 +11,17 @@ These are my reasons why the meme I'm given isn't hateful.
 N
 ```
 
-A meme is hateful if it is a  direct or indirect attack on people based on characteristics, including ethnicity, race, nationality, immigration status, religion, caste, sex, gender identity, sexual orientation, and disability or disease. We define attack as violent or dehumanizing (comparing people to non-human things, e.g. animals) speech, statements of inferiority, and calls for exclusion or segregation. Mocking hate crime is also considered hate speech.
+A meme is hateful if it is a direct or indirect negative comment on people based on characteristics, including ethnicity, race, nationality, immigration status, religion, caste, sex, gender identity, sexual orientation, and disability or disease. We define hateful as dehumanizing (ex. comparing people to non-human things, e.g. animals) speech, statements of inferiority (ex. negative generalization),  perpetuating harmful biases and stereotypes,  and calls for exclusion or segregation. Mocking hate crime is also considered hate speech (ex. trivializing sensitive topics with jokes is a common form of this).
 
 This is background information that might be relevant for understanding the meme:
 {background}
 
-
-This is the information you are given about the meme:
-
-
+This is the information you are given about the meme. Some of the given interpretations of the author's hidden implicit intentions are wrong, and use what parts of it are helpful for you:
 ```
 {meme_info}
 ```
 
-Reason and do critical thinking to verify if it is hateful or not and be careful to see if it fits the definition of hateful. After your reasoning, finish by writing three hashtags (i.e. ###) to separate the reasoning and the answer and ONLY outputting 'H' if the meme is hateful or 'N' if it is not hateful. Following this format is VERY important.
+Reason and do critical thinking to verify if it is hateful or not and be careful to see if it fits the definition of hateful. Do not try to look at it from a charitable view but at a reasonable one. After your reasoning, finish by writing three hashtags (i.e. ###) to separate the reasoning and the answer and ONLY outputting 'H' if the meme is hateful or 'N' if it is not hateful. Following this format is VERY important.
 """
 
 

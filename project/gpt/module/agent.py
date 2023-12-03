@@ -76,7 +76,8 @@ def get_meme_binary_classification(meme_info, background, model='gpt-3.5-turbo')
             }
 
         except Exception as e:
-            print(f"Attempt {attempt + 1}: An error occurred while generating the prompt: {e}\n{response}")
+            # print(f"Attempt {attempt + 1}: An error occurred while generating the prompt: {e}\n{response}")
+            print(f"Attempt {attempt + 1}: An error occurred while generating the prompt: {e}")
             print()
             print(prompt)
             time.sleep(retry_delay)

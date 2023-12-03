@@ -4,8 +4,9 @@ import pandas as pd
 
 # Load your dataset
 # data = pd.read_csv("checkpoints_eval/data62.csv")  # replace with the path to your dataset
-data = pd.read_csv("checkpoints_eval/data62.csv").dropna()
-data = data[data['expert_label'] != data['predicted_answer_eval']]
+data = pd.read_csv("checkpoints/data290.csv").dropna()
+# data = data[data['expert_label'] != data['predicted_answer_eval']]
+data = data[data['expert_label'] != data['predicted_answer']]
 
 def display_meme_data(index):
     if index is None or index < 0 or index >= len(data):
@@ -24,8 +25,8 @@ def display_meme_data(index):
         "Result Text": entry['result_text'],
         "Predicted Answer": entry['predicted_answer'],
         # "Prompt Eval": entry['prompt_eval'],
-        "Result Text Eval": entry['result_text_eval'],
-        "Predicted Answer Eval": entry['predicted_answer_eval'],
+        # "Result Text Eval": entry['result_text_eval'],
+        # "Predicted Answer Eval": entry['predicted_answer_eval'],
     }
 
 demo = gr.Interface(

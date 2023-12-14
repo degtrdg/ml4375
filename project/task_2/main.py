@@ -116,3 +116,5 @@ final_test = label(final_test)
 final_test.at[380, 'Final_Prediction'] = 'A'
 final_test.at[788, 'Final_Prediction'] = 'D'
 final_test.to_csv('test_final_labeled.csv', index=False)
+
+final_test['Final_Prediction'].to_csv('implicit.txt', index=False, header=False)
